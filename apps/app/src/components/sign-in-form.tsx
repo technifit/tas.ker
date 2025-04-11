@@ -1,12 +1,12 @@
-import { authClient } from '@/lib/auth-client';
-import { useForm } from '@tanstack/react-form';
-import { useNavigate } from '@tanstack/react-router';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import Loader from './loader';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { authClient } from "@/lib/auth-client";
+import { useForm } from "@tanstack/react-form";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { z } from "zod";
+import Loader from "./loader";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 export default function SignInForm({
   onSwitchToSignUp,
@@ -14,14 +14,14 @@ export default function SignInForm({
   onSwitchToSignUp: () => void;
 }) {
   const navigate = useNavigate({
-    from: '/',
+    from: "/",
   });
   const { isPending } = authClient.useSession();
 
   const form = useForm({
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     onSubmit: async ({ value }) => {
       await authClient.signIn.email(
@@ -32,9 +32,9 @@ export default function SignInForm({
         {
           onSuccess: () => {
             navigate({
-              to: '/dashboard',
+              to: "/dashboard",
             });
-            toast.success('Sign in successful');
+            toast.success("Sign in successful");
           },
           onError: (error) => {
             toast.error(error.error.message);
@@ -44,8 +44,8 @@ export default function SignInForm({
     },
     validators: {
       onSubmit: z.object({
-        email: z.string().email('Invalid email address'),
-        password: z.string().min(6, 'Password must be at least 6 characters'),
+        email: z.string().email("Invalid email address"),
+        password: z.string().min(6, "Password must be at least 6 characters"),
       }),
     },
   });
@@ -115,7 +115,7 @@ export default function SignInForm({
         <form.Subscribe>
           {(state) => (
             <Button type="submit" className="w-full" disabled={!state.canSubmit || state.isSubmitting}>
-              {state.isSubmitting ? 'Submitting...' : 'Sign In'}
+              {state.isSubmitting ? "Submitting..." : "Sign In"}
             </Button>
           )}
         </form.Subscribe>

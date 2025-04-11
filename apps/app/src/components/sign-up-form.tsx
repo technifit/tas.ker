@@ -1,12 +1,12 @@
-import { authClient } from '@/lib/auth-client';
-import { useForm } from '@tanstack/react-form';
-import { useNavigate } from '@tanstack/react-router';
-import { toast } from 'sonner';
-import { z } from 'zod';
-import Loader from './loader';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { authClient } from "@/lib/auth-client";
+import { useForm } from "@tanstack/react-form";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { z } from "zod";
+import Loader from "./loader";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 export default function SignUpForm({
   onSwitchToSignIn,
@@ -14,15 +14,15 @@ export default function SignUpForm({
   onSwitchToSignIn: () => void;
 }) {
   const navigate = useNavigate({
-    from: '/',
+    from: "/",
   });
   const { isPending } = authClient.useSession();
 
   const form = useForm({
     defaultValues: {
-      email: '',
-      password: '',
-      name: '',
+      email: "",
+      password: "",
+      name: "",
     },
     onSubmit: async ({ value }) => {
       await authClient.signUp.email(
@@ -34,9 +34,9 @@ export default function SignUpForm({
         {
           onSuccess: () => {
             navigate({
-              to: '/dashboard',
+              to: "/dashboard",
             });
-            toast.success('Sign up successful');
+            toast.success("Sign up successful");
           },
           onError: (error) => {
             toast.error(error.error.message);
@@ -46,9 +46,9 @@ export default function SignUpForm({
     },
     validators: {
       onSubmit: z.object({
-        name: z.string().min(2, 'Name must be at least 2 characters'),
-        email: z.string().email('Invalid email address'),
-        password: z.string().min(6, 'Password must be at least 6 characters'),
+        name: z.string().min(2, "Name must be at least 2 characters"),
+        email: z.string().email("Invalid email address"),
+        password: z.string().min(6, "Password must be at least 6 characters"),
       }),
     },
   });
@@ -140,7 +140,7 @@ export default function SignUpForm({
         <form.Subscribe>
           {(state) => (
             <Button type="submit" className="w-full" disabled={!state.canSubmit || state.isSubmitting}>
-              {state.isSubmitting ? 'Submitting...' : 'Sign Up'}
+              {state.isSubmitting ? "Submitting..." : "Sign Up"}
             </Button>
           )}
         </form.Subscribe>

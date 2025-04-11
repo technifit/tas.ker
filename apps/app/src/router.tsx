@@ -1,20 +1,20 @@
-import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createRouter as createTanstackRouter } from '@tanstack/react-router';
-import { createTRPCClient, httpBatchLink } from '@trpc/client';
-import { createTRPCOptionsProxy } from '@trpc/tanstack-react-query';
-import { toast } from 'sonner';
-import type { AppRouter } from '../../server/src/routers';
-import Loader from './components/loader';
-import './index.css';
-import { routeTree } from './routeTree.gen';
-import { TRPCProvider } from './utils/trpc';
+import { QueryCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createRouter as createTanstackRouter } from "@tanstack/react-router";
+import { createTRPCClient, httpBatchLink } from "@trpc/client";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { toast } from "sonner";
+import type { AppRouter } from "../../server/src/routers";
+import Loader from "./components/loader";
+import "./index.css";
+import { routeTree } from "./routeTree.gen";
+import { TRPCProvider } from "./utils/trpc";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => {
       toast.error(error.message, {
         action: {
-          label: 'retry',
+          label: "retry",
           onClick: () => {
             queryClient.invalidateQueries();
           },
@@ -32,7 +32,7 @@ const trpcClient = createTRPCClient<AppRouter>({
       fetch(url, options) {
         return fetch(url, {
           ...options,
-          credentials: 'include',
+          credentials: "include",
         });
       },
     }),
@@ -65,7 +65,7 @@ export const createRouter = () => {
 };
 
 // Register the router instance for type safety
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
     router: ReturnType<typeof createRouter>;
   }
